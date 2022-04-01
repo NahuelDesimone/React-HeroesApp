@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { getHeroById } from "../../selectors/getHeroById";
 
 export const HeroScreen = () => {
   const { heroeID } = useParams();
 
-  const hero = getHeroById(heroeID);
+  const hero = useMemo(() => getHeroById(heroeID), [heroeID])
+
+  //Con el useMemo memorizo el valor de hero, y solo se vuelve a llamar cuando cambia una de las dependencias
+  //En este caso la dependencua seria el horeID, siempre que cambie el heroeID se vuelve a llamar
 
   const navigate = useNavigate();
 
@@ -25,7 +28,7 @@ export const HeroScreen = () => {
   return (
     <div className="row mt-5">
       <div className="col-4">
-        <img src={imagePath} alt={superhero} className="img-thumbnail" />
+        <img src={imagePath} alt={superhero} className="img-thumbnail animate__animated animate__bounceInLeft" />
       </div>
 
       <div className="col-8">
